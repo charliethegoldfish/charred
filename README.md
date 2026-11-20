@@ -1,2 +1,2 @@
-# hotkey_display
+# Charred
 Displays configurable hotkey info for a given focused application

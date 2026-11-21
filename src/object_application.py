@@ -1,4 +1,4 @@
-from src.object_window import ObjectWindow
+from object_window import ObjectWindow
 
 class ObjectApplication:
 	def __init__(self, name: str, windows: list[ObjectWindow]):

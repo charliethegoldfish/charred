@@ -3,8 +3,8 @@ import gi
 gi.require_version('Atspi', '2.0')
 from gi.repository import Atspi
 
-from src.object_application import ObjectApplication
-from src.object_window import ObjectWindow
+from object_application import ObjectApplication
+from object_window import ObjectWindow
 
 def get_all_applications() -> list[Atspi.Accessible]:
 	desktop = Atspi.get_desktop(0)

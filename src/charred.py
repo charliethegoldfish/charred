@@ -1,16 +1,19 @@
 import gi
 
-gi.require_version('Atspi', '2.0')
-from gi.repository import Atspi
+from utilities_system import is_platform_linux
+
+if is_platform_linux():
+	gi.require_version('Atspi', '2.0')
+	from gi.repository import Atspi
 
 from utilities_application import get_applications
 
 def main():
 	print("Charred app here!")
 
-	# TODO: Only do this on linux platforms?
-	if Atspi.init() != 0:
-		print("Atspi was not initialised")
+	if is_platform_linux():
+		if Atspi.init() != 0:
+			print("Atspi was not initialised")
 
 	apps = get_applications()
 	for app in apps:

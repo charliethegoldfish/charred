@@ -31,6 +31,17 @@ def get_all_windows_for_app(app) -> list:
 
 	return windows
 
+def is_window_focused(window:Atspi.Accessible):
+	state_set = window.get_state_set()
+	states = state_set.get_states()
+
+	if Atspi.StateType.FOCUSABLE in states:
+		return Atspi.StateType.FOCUSED in states
+	elif Atspi.StateType.SELECTABLE in states:
+		return Atspi.StateType.SELECTED in states
+	return Atspi.StateType.ACTIVE in states
+
+
 def get_application_objects() -> list[ObjectApplication]:
 	app_objects = []
 	
@@ -44,6 +55,11 @@ def get_application_objects() -> list[ObjectApplication]:
 		for window in windows:
 			window_name = window.get_name()
 			window_object = ObjectWindow(window_name)
+
+			window_focused = is_window_focused(window)
+			if window_focused:
+				window_object.set_state_focused()
+
 			window_objects.append(window_object)
 
 		app_object = ObjectApplication(name, window_objects)

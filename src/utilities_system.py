@@ -1,14 +1,22 @@
-import sys
+from utilities_config import is_platform_linux, is_platform_macos, is_platform_windows, is_platform_supported, get_platform
 
-PLATFORM_LINUX = 'linux'
-PLATFORM_WINDOWS = 'win32'
-PLATFORM_MACOS = 'darwin'
+if is_platform_linux:
+	from utilities_system_linux import shutdown, initialise
+elif is_platform_macos:
+	from utilities_system_macos import shutdown, initialise
+elif is_platform_windows:
+	from utilities_system_windows import shutdown, initialise
 
-def is_platform_linux() -> bool:
-	return sys.platform == PLATFORM_LINUX
+def check_platform() -> bool:
+	if not is_platform_supported():
+		raise RuntimeError(f"Platform {get_platform()} is unsupported")
+	return True
 
-def is_platform_windows() -> bool:
-	return sys.platform == PLATFORM_WINDOWS
+def initialise_systems():
+	if check_platform():
+		initialise()
 
-def is_platform_macos() -> bool:
-	return sys.platform == PLATFORM_MACOS
+def on_quit(window):
+	if check_platform():
+		shutdown()
+
